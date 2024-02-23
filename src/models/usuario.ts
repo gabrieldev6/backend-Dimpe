@@ -53,7 +53,7 @@ export default class Usuario {
         
         
         
-      }
+    }
     
 
     public get nome() : string {
