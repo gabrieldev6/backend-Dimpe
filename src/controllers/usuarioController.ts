@@ -11,22 +11,18 @@ import { Buffer } from "buffer";
 
 export class UsuarioController {
   async imgUsuario(req: Request, res: Response) {
+    if (req.file) {
+      console.log(req.file)
+      return res.status(200).json({erro: false, 
+        mensagem: 'recebido com sucesso'})
+    }
 
-    const { img } = req.body
-    // pega so o que precisa para montar a imagem
-    const img64 = img.split(',')[1]
-    // transforma base base64 para buffer
-    const imgbuffer = Buffer.from(img64, 'base64')
-    // cria um caminho e nome de arquivo unico para cada imagem
-    const pathImg = path.join(__dirname, `uploads/profile${Date.now()}.png`)
-    // cria um arquivo de imagem no caminho definido em pathImg
-    fs.writeFile(pathImg, imgbuffer, { encoding: 'base64' }, (err) => {
-      // se der algum erro vai mostrar no terminal
-      console.log(err)
+    return res.status(400).json({erro: true,
+      mensagem: "erro upload nao realizado"
     })
-    return res.status(200).json('imagem salva com sucesso')
-  }
 
+  }
+  
   async login(req: Request, res: Response) {
     const { email, senha } = req.body;
 

@@ -1,13 +1,17 @@
 import Frame from "./frame"
 export default class ListFrame {
-    readonly frames: Array<Frame>
-    private readonly data: Date
-    private readonly indice: number 
     
-    constructor(frames: Array<Frame>, data: Date, indice: number) {
-        this.frames = frames
+    private readonly data: Date
+    private readonly indice_lista: number 
+    
+    
+    private constructor(data: Date, indice_lista: number) {
+        
         this.data = data
-        this.indice = indice
+        this.indice_lista = indice_lista
+    }
+    static create(data: Date, indice_lista: number) {
+        return new ListFrame(data, indice_lista)
     }
 }
 

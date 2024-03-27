@@ -1,50 +1,136 @@
 import { Response, Request } from "express";
 
-import fs from 'fs'
-import path from "path";
-import { Buffer } from "buffer";
-import Frame from "../models/frame";
+
 import Detector from "../models/detector";
-import ListFrame from "../models/listFrame";
+import { detectorRepository } from "../repositories/detectorRepositore";
+import { listFrameRepository } from "../repositories/listFrameRepostore";
+import { FrameRepository } from "../repositories/frameRepositore";
+
+// import { usuarioRepository } from "../repositories/usuarioRepositore";
 
 export class DetectorController {
-    async createListDetector(req: Request, res: Response) {
-        const { listFrame, listBoundingbox } = req.body
+  async createListFrame (req: Request, res: Response) {
+    const {tempo} = req.body
 
-        let list: ListFrame
-        let listObjectBoundingBox: Array<Detector> = []
-        for (let i = 0; i <= listFrame.length-1; i++) {
-            
-            let nomeFrame = 'frame'+Date.now()
-            // const img64 = listFrame[i].split(',')[1]
-            // const imgbuffer = Buffer.from(img64, 'base64')
-            // const pathImg = path.join(__dirname, `uploads/${nomeFrame}.png`)
-            
-            // fs.writeFile(pathImg, imgbuffer, { encoding: 'base64' }, (err) => {
-            //     console.log(err)
-            // })
-            
-            for(let j = 0; j <= listBoundingbox[i].length-1; j++) {
-                // console.log('boundingBox individual')
-                console.log(listBoundingbox[i][j].label)
-                let boundingBox = Detector.create(
-                    listBoundingbox[i][j].width,
-                    listBoundingbox[i][j].height,
-                    listBoundingbox[i][j].x,
-                    listBoundingbox[i][j].y,
-                    listBoundingbox[i][j].score,
-                    listBoundingbox[i][j].label,
-                    nomeFrame)
-                
-                listObjectBoundingBox.push(boundingBox)
-                console.log(i, j)
-            }
-            
-        }
+    // console.log(tempo)
+    
+    let newListFrame = listFrameRepository.create({data: tempo, indice_lista: 1})
+    await listFrameRepository.save(newListFrame)
 
-        console.log(listObjectBoundingBox)
-        
+    console.log(newListFrame)
 
-        return res.status(200).json('deu certo irmao vlw');
+    if(newListFrame) {
+      
+      return res.status(200).json({
+        erro: false,
+        mensagem: "referencia de lista criada com sucesso"
+      })
+
     }
+
+  }
+
+  async createListBoudingBox(req: Request, res: Response) {
+
+    const { list, dataNow } = req.body
+    let newBoundingBox
+    if (!list) {
+      res.status(400).json({
+        erro: true,
+        mensagem: 'nao recebi nada'
+      })
+    }
+
+    // console.log(dataNow)
+
+
+
+
+    for (let i = 0; i < list.length; i++) {
+      let boundingBox = Detector.create(
+        list[i].width,
+        list[i].height,
+        list[i].x,
+        list[i].y,
+        list[i].score,
+        list[i].label,
+        dataNow)
+
+      newBoundingBox = detectorRepository.create(boundingBox)
+      await detectorRepository.save(newBoundingBox)
+
+
+    }
+
+    if (newBoundingBox) {
+
+      return res.status(200).json({
+        erro: false,
+        mensagem: 'salvo com sucesso'
+      })
+
+    } else {
+
+      return res.status(400).json({
+        erro: true,
+        mensagem: 'não foi possivel salvar os dados'
+      })
+
+    }
+  }
+
+  async createListDetector(req: Request, res: Response) {
+    if (req.file) {
+      // vai pegar a ultimo elemento da tabela
+      const ultimoDaLista = await listFrameRepository.find({order: {
+        id_list: "DESC"
+      }})
+
+      console.log("ultimo da lista: ")
+      console.log(ultimoDaLista)
+      let newFrame = FrameRepository.create({ nome: req.file.originalname, caminho: req.file.path, indice_lista: ultimoDaLista[0].id_list })
+      await FrameRepository.save(newFrame)
+
+      return res.status(200).json({
+        erro: false,
+        mensagem: 'recebido com sucesso'
+      })
+
+
+    }
+
+    return res.status(400).json({
+      erro: true,
+      mensagem: "erro upload nao realizado"
+    })
+  }
+
+  async readListFrame(req: Request, res: Response) {
+    const { numberList } = req.body
+    const listBoudingBox: Array<any> = []
+
+    const listFrame = await listFrameRepository.findOne({ where: { id_list: numberList } })
+
+    const frames = await FrameRepository.findBy({ indice_lista: listFrame?.id_list })
+
+    for (let i = 0; i < frames.length; i++) {
+
+      const boundingBox = await detectorRepository.findOne({ where: { frame: frames[i].nome } })
+
+      listBoudingBox.push(boundingBox)
+    }
+    // console.log(listFrame)
+    // console.log(frames)
+    // console.log(listBoudingBox)
+
+
+    res.status(200).json({
+      erro: false,
+      listFrame: listFrame,
+      frames: frames,
+      listBoundingBox: listBoudingBox
+    })
+  }
+
+
 }

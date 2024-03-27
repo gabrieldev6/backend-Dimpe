@@ -1,16 +1,32 @@
 import Detector from "./detector";
 
 export default class Frame {
-    readonly boundingbox: Array<Detector>
-    private readonly nome: string
-    private readonly indice_lista: number
+    private readonly _boundingbox: Array<Detector>
+    private readonly _nome: string
+    private readonly _indice_lista: number
 
     constructor(boundingbox: Array<Detector>, nome: string, indice_lista: number) {
-        this.boundingbox = boundingbox
-        this.nome = nome
-        this.indice_lista = indice_lista
+        this._boundingbox = boundingbox
+        this._nome = nome
+        this._indice_lista = indice_lista
     }
 
+    
+    public get nome() : string {
+        return this._nome
+    }
+    
+    public get boundingbox() : Array<Detector> {
+        return this._boundingbox
+    }
+    
+    
+    public get indice_lista() : number {
+        return this._indice_lista
+    }
+    
+    
+    
     
 }
 

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import { Frame } from "./frame.entities";
 
 @Entity("detector")
 export class Detector {
@@ -24,6 +25,9 @@ export class Detector {
     @Column({type: "text"})
     classe: string
 
+    
     @Column({type: "text"})
     frame: string
+
+    
 }
