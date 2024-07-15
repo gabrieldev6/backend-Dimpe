@@ -4,7 +4,7 @@ export default multer({
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
                 
-            cb(null, './uploads/frame')
+            cb(null, './src/uploads/frame')
         },
         filename: (req, file, cb) => {
             cb(null, `${file.originalname}.png`)
