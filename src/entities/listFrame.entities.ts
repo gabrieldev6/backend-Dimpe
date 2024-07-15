@@ -9,8 +9,8 @@ export class ListFrame {
     @Column({type: "text"})
     data: Date
 
-    @Column({type: "integer"})
-    indice_lista : number
+    @Column({type: "text"})
+    capa : string
     
 
     

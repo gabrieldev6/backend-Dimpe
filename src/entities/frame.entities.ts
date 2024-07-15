@@ -14,6 +14,10 @@ export class Frame {
     @Column({type: "integer"})
     indice_lista : number
     
+    @Column({type: "integer"})
+    altura: number
 
+    @Column({type: "integer"})
+    largura: number
     
 }
