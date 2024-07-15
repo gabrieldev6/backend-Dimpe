@@ -26,7 +26,7 @@ routes.post("/frame", uploadFrame.single('image'), (req, res) =>  new DetectorCo
 
 routes.get('/getFrame/:id', (req, res) => new DetectorController().readListFrame(req, res))
 routes.get('/getListsframes', (req, res) => new DetectorController().readList(req, res))
-routes.get('/getListBoundingBox/:id', (req, res) => new DetectorController().readListBoundingBox(req, res))
+// routes.get('/getListBoundingBox/:id', (req, res) => new DetectorController().readListBoundingBox(req, res))
 //a partir daqui tds as rotas so sao acessadas apenas com a token
 // routes.use(autenticaoToken)
 
