@@ -5,9 +5,7 @@ import Usuario from "../models/usuario";
 
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import fs from 'fs'
-import path from "path";
-import { Buffer } from "buffer";
+
 
 export class UsuarioController {
   async imgUsuario(req: Request, res: Response) {
