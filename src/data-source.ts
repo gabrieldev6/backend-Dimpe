@@ -14,7 +14,7 @@ import { default1720803151273 } from "./migrations/1720803151273-default"
 const port = process.env.DB_PORT as number | undefined;
 
 export const AppDataSource = new DataSource({
-  type: "mysql",
+  type: "postgres",
   host: process.env.DB_HOST,
   port: port,
   username: process.env.DB_USER,
