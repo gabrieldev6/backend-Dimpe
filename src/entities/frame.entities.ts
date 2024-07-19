@@ -5,10 +5,11 @@ export class Frame {
 
     @PrimaryGeneratedColumn()
     id_frame: number;
-    @Column({type: "text"})
+
+    @Column({type: "varchar", length:100})
     caminho: string
 
-    @Column({type: "text"})
+    @Column({type: "varchar", length:100})
     nome: string
 
     @Column({type: "integer"})
