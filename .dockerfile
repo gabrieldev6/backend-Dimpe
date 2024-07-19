@@ -13,7 +13,7 @@ COPY tsconfig.json .
 # RUN npm cache clear --force
 # Instale as dependências
 
-RUN npm install && npm run build
+RUN npm install && npm run build && npm run migration:run
 
 # Exponha a porta em que o servidor estará escutando
 EXPOSE 3000
