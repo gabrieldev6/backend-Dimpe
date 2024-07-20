@@ -15,7 +15,7 @@ COPY tsconfig.json .
 
 RUN npm install
 RUN npm run build
-# RUN npm run migration:run
+RUN npm run migration:run
 # Exponha a porta em que o servidor estará escutando
 EXPOSE 3000
 
