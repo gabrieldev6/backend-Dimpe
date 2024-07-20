@@ -6,10 +6,10 @@ export class ListFrame {
     @PrimaryGeneratedColumn()
     id_list: number;
 
-    @Column({type: "text"})
+    @Column({type: "varchar", length:100})
     data: Date
 
-    @Column({type: "text"})
+    @Column({type: "varchar", length:100})
     capa : string
     
 

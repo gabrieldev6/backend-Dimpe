@@ -1,5 +1,5 @@
 node_modules
 dist
 .env
-migrations
-uploads
+uploads/frame/*
+uploads/usuario/*

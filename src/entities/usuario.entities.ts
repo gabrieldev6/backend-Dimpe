@@ -5,16 +5,16 @@ export class Usuario {
     @PrimaryGeneratedColumn()
     id_usuario: number;
 
-    @Column({type: "text", nullable: false})
+    @Column({type: "varchar", nullable: false, length:100})
     nome: string;
 
-    @Column({ type: "text", nullable: false })
+    @Column({ type: "varchar", nullable: false , length:100})
     email: string;
 
-    @Column({ type: "text", nullable: false})
+    @Column({ type: "varchar", nullable: false, length:100})
     senha: string;
 
-    @Column({type: "text", nullable: true})
+    @Column({type: "varchar", nullable: true, length:100})
     foto: string | null
 
 

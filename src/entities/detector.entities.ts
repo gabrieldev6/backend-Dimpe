@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
-import { Frame } from "./frame.entities";
 
 @Entity("detector")
 export class Detector {
@@ -7,26 +6,26 @@ export class Detector {
     @PrimaryGeneratedColumn()
     id_detector: number;
 
-    @Column({type: "float"})
+    @Column({type: "real"})
     width : number
     
-    @Column({type: "float"})
+    @Column({type: "real"})
     heigth: number
     
-    @Column({type: "float"})
+    @Column({type: "real"})
     x: number
     
-    @Column({type: "float"})
+    @Column({type: "real"})
     y: number
 
-    @Column({type: "float"})
+    @Column({type: "real"})
     acertividade: number
 
-    @Column({type: "text"})
+    @Column({type: "varchar", length:100})
     classe: string
 
     
-    @Column({type: "text"})
+    @Column({type: "varchar", length:100})
     frame: string
 
     

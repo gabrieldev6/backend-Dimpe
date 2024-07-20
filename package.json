@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": "20"
+  },
   "scripts": {
     "dev": "nodemon --exec ts-node ./src/index.ts",
+    "migration:create": "ts-node node_modules/typeorm/cli.js migration:create ./src/migrations/newMigration",
     "migration:generate": "typeorm-ts-node-commonjs -d ./src/data-source.ts migration:generate ./src/migrations/default",
     "migration:run": "typeorm-ts-node-commonjs -d ./dist/data-source.js migration:run",
     "typeorm:cli": "ts-node node_modules/typeorm/cli.js",
@@ -35,7 +39,6 @@
     "mysql2": "^3.2.0",
     "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
-    "sharp": "^0.33.2",
     "sqlite3": "^5.1.4"
   }
 }
