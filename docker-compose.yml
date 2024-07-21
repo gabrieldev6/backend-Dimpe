@@ -1,13 +1,13 @@
 version: "3.4"
 services:
  db:
-  image: postgres:13
+  image: postgres:16
   ports: 
     - "5432:5432"
   environment:
-      POSTGRES_DB: dimpe
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: nodedeploy_pg_eo5k
+      POSTGRES_USER: nodedeploy_pg_eo5k_user
+      POSTGRES_PASSWORD: cRKjndhlN9ytUeFJlfj2VuzvK9llQOFP
       
  api:
   build: 
