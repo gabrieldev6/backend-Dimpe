@@ -6,6 +6,7 @@ export class frame1721349662668 implements MigrationInterface {
         await queryRunner.createTable(
             new Table(
             {
+                
                 name: "Frame",
                 columns: [
                     {name: "id", type: "integer", isGenerated: true },

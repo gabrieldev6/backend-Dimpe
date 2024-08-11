@@ -6,6 +6,7 @@ export class detector1721348946407 implements MigrationInterface {
         await queryRunner.createTable(
             new Table(
             {
+                
                 name: "Detector",
                 
                 columns: [

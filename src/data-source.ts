@@ -13,7 +13,7 @@ import { listFrame1721350053848 } from "./migrations/1721350053848-listFrame"
 const port = process.env.DB_PORT as number | undefined;
 
 export const AppDataSource = new DataSource({
-  type: "postgres",
+  type: "mysql",
   host: process.env.DB_HOST,
   port: port,
   username: process.env.DB_USER,
