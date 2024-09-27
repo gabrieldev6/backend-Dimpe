@@ -1,36 +1,43 @@
 import * as bcrypt from "bcrypt";
+import {v4 as uuidv4} from "uuid";
 
 export default class Usuario {
-    private readonly _nome: string
-    private readonly _email: string
-    private readonly _senha: string
-    private readonly _foto: string | null
 
-    private constructor(nome: string, email: string, senha: string, foto: string | null) {
-        this._nome = nome
+    private readonly _uuid: string;
+    private readonly _name: string;
+    private readonly _email: string;
+    private readonly _password: string;
+    private readonly _photo: string | null;
+    private readonly _enterprise: string;
+
+    private constructor(name: string, email: string, senha: string, photo: string | null, enterprise: string) {
+        this._uuid = uuidv4();
+        this._name = name
         this._email = this.validateEmail(email)
-        this._senha = this.validateSenha(senha)
-        this._foto = foto
+        this._password = this.validateSenha(senha)
+        this._photo = photo
+        this._enterprise = enterprise
     }
 
-    static create(nome: string, email: string, senha: string, foto: string | null) {
-        if(nome != '' && email != '' && senha != ''){
-            return new Usuario(nome, email, senha, foto)
+    static create(uuid:string | null, name: string, email: string, password: string, photo: string | null, enterprise: string) {
+
+        if(uuid == null && name != '' && email != '' && password != ''){
+            return new Usuario(name, email, password, photo, enterprise)
         } else {
             return 'algum campo está em branco'
         }
         
     }
-    private validateSenha( senha: string) {
+    private validateSenha( password: string) {
         const validatesenha = new RegExp("^(?=.*[A-Za-z])(?=.*?[0-9]).{6,}$")
         
-        if(senha == "" || senha == null || !(validatesenha.test(senha))) {
+        if(password == "" || password == null || !(validatesenha.test(password))) {
           throw new Error("senha é obrigatorio, devendo conter números, simbolos e letras maiusculas e minusculas ")
     
         }
         const salt = bcrypt.genSaltSync(12);
-        let senhaH = bcrypt.hashSync(senha, salt);
-        return senhaH
+        let passwordH = bcrypt.hashSync(password, salt);
+        return passwordH
     }
 
     private validateEmail(email: string) {
@@ -39,7 +46,7 @@ export default class Usuario {
         const validateEmail = new RegExp("(([a-z]+\.?[a-z]+\.?[a-z]+[0-9]{2})+)(@aluno.ifce.edu.br)")
         const validateEmail1 = new RegExp("(([a-z]+\.?[a-z]+\.?[a-z])+)(@ifce.edu.br)")
     
-        if(this.nome == "" || this.nome == null) {
+        if(this.name == "" || this.name == null) {
           throw new Error("nome é obrigatorio")
         }
     
@@ -56,20 +63,20 @@ export default class Usuario {
     }
     
 
-    public get nome() : string {
-        return this._nome
+    public get name() : string {
+        return this._name
     }
     
     public get email() : string {
         return this._email
     }
     
-    public get senha() : string {
-        return this._senha
+    public get password() : string {
+        return this._password
     }
     
-    public get foto() : string | null {
-        return this._foto
+    public get photo() : string | null {
+        return this._photo
     }
     
     
